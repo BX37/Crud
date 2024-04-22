@@ -34,8 +34,6 @@ namespace Crud
                     command.Parameters.AddWithValue("@password", MDPSaler);
                     int count = Convert.ToInt32(command.ExecuteScalar());
                     return count > 0;
-
-
                 }
                 catch (Exception ex)
                 {
@@ -57,7 +55,7 @@ namespace Crud
             Laconnexion.IsConnect();
             try
             {
-                string query = "SELECT ID_User, prenom, login FROM user WHERE login=@login AND MDP=@password";
+                string query = "SELECT ID_User, prenom, login, Niveau FROM user WHERE login=@login AND MDP=@password";
                 MySqlCommand command = new MySqlCommand(query, Laconnexion.Connection);
                 command.Parameters.AddWithValue("@login", login);
                 command.Parameters.AddWithValue("@password", mdp);
@@ -68,6 +66,7 @@ namespace Crud
                     user.UtilisateurID = reader.GetInt32("ID_User");
                     user.UtilisateurLogin = reader.GetString("Login");
                     user.UtilisateurPrenom = reader.GetString("Prenom");
+                    user.UtilisateurNiveau = reader.GetString("Niveau");
                 }
             }
             catch (Exception ex)

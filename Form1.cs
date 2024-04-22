@@ -60,7 +60,6 @@ namespace Crud
         {
             if (laConnexion.IsConnect())
             {
-                //string query = "select ID_User, Nom, Prenom, Login, Archive, Niveau from user;";
                 string query = "select ID_User, Nom, Prenom, Login, Archive, Niveau, DateHeureConnexion, DateHeureDeconnexion, NbMauvaisMDP from user;";
                 var cmd = new MySqlCommand(query, laConnexion.Connection);
                 var reader = cmd.ExecuteReader();

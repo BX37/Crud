@@ -9,6 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PdfSharp.Pdf;
+using PdfSharp.Drawing;
+using PdfSharp.Fonts;
 
 namespace Crud
 {
@@ -18,50 +21,108 @@ namespace Crud
         DBConnection laConnexion = new DBConnection();
         Utilisateur userCo = new Utilisateur();
         Log LogEnCours = new Log();
-        List<Livre> ListLivre = new List<Livre>();
+        List<Livre> ListInventorier = new List<Livre>();
+        Livre selectedLivre = new Livre(); 
+
         public FormOperateur(Utilisateur utilisateurCo, Log leLog)
         {
             InitializeComponent();
+            laConnexion.Server = "localhost";
+            laConnexion.DatabaseName = "belletable";
+            laConnexion.UserName = "root";
+            laConnexion.Password = Crypto.Decrypt("Wmij8pPWECP0WBekexqbrA==");
             userCo = utilisateurCo;
             LogEnCours = leLog;
+            DGVLivre.Refresh();
         }
         private void MAJ(object sender, FormClosedEventArgs e)
         {
             utilitaire.MAJDateTimeDeco(laConnexion, userCo);
             utilitaire.logDeconnexionMAJ(laConnexion, userCo, LogEnCours);
         }
-        private void RemplirDGV()
+        public void RemplirDGVLivre()
         {
             if (laConnexion.IsConnect())
             {
-                //string query = "select ID_User, Nom, Prenom, Login, Archive, Niveau from user;";
-                string query = "select ID_User, Nom, Prenom, Login, Archive, Niveau, DateHeureConnexion, DateHeureDeconnexion, NbMauvaisMDP from user;";
-                var cmd = new MySqlCommand(query, laConnexion.Connection);
-                var reader = cmd.ExecuteReader();
+                string query2 = "select ID_Livre, Titre, Editeur, noticeBNF from livre where ID_Livre not in(select ID_Livre from inventaire) limit 30;";
+                var cmd2 = new MySqlCommand(query2, laConnexion.Connection);
+                var reader12 = cmd2.ExecuteReader();
 
-                while (reader.Read())
+                while (reader12.Read())
                 {
-                    string someStringFromColumOne = reader.GetString(1);
-                    string someStringFromColumThree = reader.GetString(3);
-                    Livre LeLivre = new Livre();
+                    Livre LeLivre = new Livre
                     {
-                        LeLivre.Id_Livre = (int)reader["ID_User"],
-                        UtilisateurNom = (string)reader["Nom"],
-                        UtilisateurPrenom = (string)reader["Prenom"],
-                        UtilisateurLogin = (string)reader["Login"],
-                        UtilisateurArchive = (bool)reader["Archive"],
-                        UtilisateurNiveau = (string)reader["Niveau"],
-                        UtilisateurDerniereConnexion = (DateTime)reader["DateHeureConnexion"],
-                        UtilisateurDerniereDeconnexion = (DateTime)reader["DateHeureDeconnexion"],
-                        UtilisateurNbMauvaisMDP = (int)reader["NbMauvaisMDP"]
+                        ID_Livre = (int)reader12["ID_livre"],
+                        NoticeBNF_Livre = (int)reader12["NoticeBNF"],
+                        Titre_Livre = (string)reader12["Titre"],
+                        Editeur_Livre = (string)reader12["Editeur"],
                     };
-                    ListLivre.Add(LeLivre);
+
+                    ListInventorier.Add(LeLivre);
                 }
-                reader.Close();
+                reader12.Close();
             }
-            DGVLivre.DataSource = ListLivre;
-            DGVLivre.Columns["UtilisateurID"].Visible = false;
-            DGVLivre.Columns["UtilisateurMDP"].Visible = false;
+            DGVLivre.Columns["ID_livre"].Visible = false;
+            DGVLivre.DataSource = ListInventorier;
+        }
+
+        private void buttonTest_Click(object sender, EventArgs e)
+        {
+            PdfDocument document = new PdfDocument();
+            // Ajout d'une page au document
+            PdfPage page = document.AddPage();
+            // Obtention du dessinateur pour la page
+            XGraphics gfx = XGraphics.FromPdfPage(page);
+            // Création d'une police
+            XFont font = new XFont("Arial", 12.0, XFontStyle.Regular);
+            // Dessin du texte sur la page
+            gfx.DrawString("Ceci est un exemple de texte dans un fichier PDF créé avec C#.", font,
+           XBrushes.Black,
+            new XRect(30, 30, page.Width.Point, page.Height.Point), XStringFormats.TopLeft);
+            // Sauvegarde du document PDF
+            string pdfFilePath = "C:\\testPDF\\testPDF.pdf";
+            document.Save(pdfFilePath);
+            // Fermeture du document
+            document.Close();
+            Console.WriteLine($"Le fichier PDF a été créé avec succès : {pdfFilePath}");
+
+        }
+
+        private void buttonConsulter_Click(object sender, EventArgs e)
+        {
+            FormOuvrage formOuvrage = new FormOuvrage();
+            DialogResult result = formOuvrage.ShowDialog();
+            this.Visible = false;
+
+            if (result == DialogResult.OK)
+            {
+
+            }
+            else if (result == DialogResult.Cancel)
+            {
+
+            }
+            this.Visible = true;
+        }
+
+        private void buttonDetail_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow row = DGVLivre.SelectedRows[0];
+            selectedLivre = (Livre)row.DataBoundItem;
+            int idLivre = selectedLivre.ID_Livre;
+            this.Visible = false;
+            Form2DetailOuvragecs FormDetail = new Form2DetailOuvragecs(idLivre);
+            DialogResult result = FormDetail.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+
+            }
+            else if (result == DialogResult.Cancel)
+            {
+
+            }
+            this.Visible = true;
         }
     }
 }
