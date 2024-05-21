@@ -115,7 +115,7 @@ namespace Crud
             int ID = Userco.UtilisateurID;
             {
                 try
-                {       
+                {
                     string query = "UPDATE user SET DateHeureConnexion = NOW() WHERE ID_User=@ID";
                     MySqlCommand command = new MySqlCommand(query, Laconnexion.Connection);
                     command.Parameters.AddWithValue("@ID", ID);
@@ -124,7 +124,7 @@ namespace Crud
                 catch (Exception ex)
                 {
                     MessageBox.Show("Erreur lors de la connexion à la base de données : " + ex.Message);
-                    
+
                 }
 
             }
@@ -158,12 +158,12 @@ namespace Crud
                     if (lignesAffectees > 0)
                     {
                         MessageBox.Show("Les données ont été insérées avec succès dans la base de données.");
-                        
+
                     }
                     else
                     {
                         MessageBox.Show("Aucune donnée n'a été insérée dans la base de données.");
-                        
+
                     }
                 }
             }
@@ -214,7 +214,7 @@ namespace Crud
                         if (rowsAffected > 0)
                         {
                             MessageBox.Show("L'utilisateur a été supprimé avec succès !");
-                            
+
                         }
                         else
                         {
@@ -237,7 +237,7 @@ namespace Crud
         public void sauvegarderUtilisateurModifier(Utilisateur utilisateurAModifier, DBConnection laNewconnexion)
         {
             if (laNewconnexion.IsConnect())
-            {                                                           
+            {
                 string query = "UPDATE user SET Nom = @nom, Prenom = @prenom, Login = @login, Niveau=@niveau, Archive=@archive, MDP = @mdp WHERE ID_User = @userID;";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, laNewconnexion.Connection))
@@ -274,12 +274,12 @@ namespace Crud
                 MessageBox.Show("La connexion à la base de données n'est pas établie.");
             }
         }
-        
+
         // Form Modifier, modifier les données du user, quand le mdp n'a pas été touché. Donc le MDP n'est pas touché.
         public void sauvegarderUtilisateurModifierSansMDP(Utilisateur utilisateurAModifier, DBConnection laNewconnexion)
         {
             if (laNewconnexion.IsConnect())
-            {                                                   
+            {
                 string query = "UPDATE user SET Nom = @nom, Prenom = @prenom, Login = @login, Niveau=@niveau, Archive=@archive WHERE ID_User = @userID;";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, laNewconnexion.Connection))
@@ -315,7 +315,7 @@ namespace Crud
                 MessageBox.Show("La connexion à la base de données n'est pas établie.");
             }
         }
-        
+
         // Form1 Quand l'utilisateur se déco. 
         public void MAJDateTimeDeco(DBConnection Laconnexion, Utilisateur Userco)
         {
@@ -342,7 +342,7 @@ namespace Crud
 
             }
         }
-        
+
         // Form Creation - Quand user se connecte, créer un nouveau LOG
         // DateTime Deco au minimum car user toujours connecté. 
         public Log logNouvelleConnexion(DBConnection Laconnexion, Utilisateur userEntrant, Log nouveauLog)
@@ -363,8 +363,8 @@ namespace Crud
                     MySqlCommand command = new MySqlCommand(query, Laconnexion.Connection);
                     command.Parameters.AddWithValue("@ID", ID);
                     command.Parameters.AddWithValue("@Login_user", Login_arrivant);
-                    command.Parameters.AddWithValue("@dateTimeCo",CO);
-                    command.Parameters.AddWithValue("@dateTimeDeco", Deco);      
+                    command.Parameters.AddWithValue("@dateTimeCo", CO);
+                    command.Parameters.AddWithValue("@dateTimeDeco", Deco);
                     // là je récup grace a LAST_INSERT_ID l'ID de mon log créé, et je le met dans mon log ID.
                     int idLogInserted = Convert.ToInt32(command.ExecuteScalar());
                     nouveauLog.Log_ID = idLogInserted;
@@ -389,7 +389,7 @@ namespace Crud
             Laconnexion.UserName = "root";
             Laconnexion.Password = Crypto.Decrypt("Wmij8pPWECP0WBekexqbrA==");
             Laconnexion.IsConnect();
-            
+
             {
                 try
                 {
@@ -407,7 +407,7 @@ namespace Crud
 
             }
         }
-        
+
         // Form Création + Form Modif.  Avant de créer ou modifier un user,
         // Verif si le login est déjà use pour éviter les doublons 
         public bool VerifDoublonLogin(Utilisateur ArrivageUser)
@@ -456,7 +456,7 @@ namespace Crud
 
                 int NbEchecAncienMDP = Convert.ToInt32(command.ExecuteScalar());
                 int nbMDP = NbEchecAncienMDP + 1;
-                
+
                 string query2 = "Update user set NbMauvaisMDP = @nbMDP where login = @login";
                 MySqlCommand command2 = new MySqlCommand(query2, Laconnexion.Connection);
                 command2.Parameters.AddWithValue("@nbMDP", nbMDP);
@@ -468,6 +468,36 @@ namespace Crud
                 Console.WriteLine("Erreur MySQL Mauvais MDP : " + ex.Message);
             }
         }
+        // Form Ouvrage - Lorsque l'opérateur séléctionne un ouvrage et l'inventorie.
+        public void NouveauInventaire(Inventaire ArrivageInventaire)
+        {
+            Laconnexion.Server = "localhost";
+            Laconnexion.DatabaseName = "belletable";
+            Laconnexion.UserName = "root";
+            Laconnexion.Password = Crypto.Decrypt("Wmij8pPWECP0WBekexqbrA==");
+            Laconnexion.IsConnect();
+
+            string query = "INSERT INTO inventaire (ID_Livre, etat, Date, Commentaire) VALUES (@id_livre, @etat, @Date, @Commentaire)";
+            using (MySqlCommand commande = new MySqlCommand(query, Laconnexion.Connection))
+            {
+                commande.Parameters.AddWithValue("@id_livre", ArrivageInventaire.id_Livre_inventaire);
+                commande.Parameters.AddWithValue("@etat", ArrivageInventaire.etat_inventaire);
+                commande.Parameters.AddWithValue("@Date", DateTime.Now);
+                commande.Parameters.AddWithValue("@Commentaire", ArrivageInventaire.commentaire_inventaire);
+
+                int lignesAffectees = commande.ExecuteNonQuery();
+                if (lignesAffectees > 0)
+                {
+                    MessageBox.Show("Les données ont été insérées avec succès dans la base de données.");
+
+                }
+                else
+                {
+                    MessageBox.Show("Aucune donnée n'a été insérée dans la base de données.");
+
+                }
+            }
+
+        }
     }
-    
 }

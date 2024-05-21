@@ -31,9 +31,8 @@
             DGVLivre = new DataGridView();
             panel1 = new Panel();
             panel2 = new Panel();
-            buttonConsulter = new Button();
-            buttonTest = new Button();
             buttonDetail = new Button();
+            buttonConsulter = new Button();
             ((System.ComponentModel.ISupportInitialize)DGVLivre).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -64,11 +63,20 @@
             panel2.BackColor = Color.Brown;
             panel2.Controls.Add(buttonDetail);
             panel2.Controls.Add(buttonConsulter);
-            panel2.Controls.Add(buttonTest);
             panel2.Location = new Point(0, 12);
             panel2.Name = "panel2";
             panel2.Size = new Size(1111, 49);
             panel2.TabIndex = 2;
+            // 
+            // buttonDetail
+            // 
+            buttonDetail.Location = new Point(12, 11);
+            buttonDetail.Name = "buttonDetail";
+            buttonDetail.Size = new Size(111, 29);
+            buttonDetail.TabIndex = 2;
+            buttonDetail.Text = "Détail";
+            buttonDetail.UseVisualStyleBackColor = true;
+            buttonDetail.Click += buttonDetail_Click;
             // 
             // buttonConsulter
             // 
@@ -79,27 +87,6 @@
             buttonConsulter.Text = "Consulter";
             buttonConsulter.UseVisualStyleBackColor = true;
             buttonConsulter.Click += buttonConsulter_Click;
-            // 
-            // buttonTest
-            // 
-            buttonTest.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            buttonTest.Location = new Point(45, 11);
-            buttonTest.Name = "buttonTest";
-            buttonTest.Size = new Size(94, 29);
-            buttonTest.TabIndex = 0;
-            buttonTest.Text = "button1";
-            buttonTest.UseVisualStyleBackColor = true;
-            buttonTest.Click += buttonTest_Click;
-            // 
-            // buttonDetail
-            // 
-            buttonDetail.Location = new Point(492, 11);
-            buttonDetail.Name = "buttonDetail";
-            buttonDetail.Size = new Size(111, 29);
-            buttonDetail.TabIndex = 2;
-            buttonDetail.Text = "Détail";
-            buttonDetail.UseVisualStyleBackColor = true;
-            buttonDetail.Click += buttonDetail_Click;
             // 
             // FormOperateur
             // 
@@ -121,7 +108,6 @@
         private DataGridView DGVLivre;
         private Panel panel1;
         private Panel panel2;
-        private Button buttonTest;
         private Button buttonConsulter;
         private Button buttonDetail;
     }

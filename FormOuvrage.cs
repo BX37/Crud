@@ -16,8 +16,9 @@ namespace Crud
         DBConnection laConnexion = new DBConnection();
         List<Livre> ListLivre = new List<Livre>();
 
-        public FormOuvrage()
+        public FormOuvrage(DBConnection laCo)
         {
+            laConnexion = laCo;
             InitializeComponent();
             RemplirDGVLivre();
         }

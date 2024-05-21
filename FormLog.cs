@@ -229,7 +229,7 @@ namespace Crud
         {
             // remplirDGV2 pour les tests, avec une requete SQL donc pas idéal.
             //remplirDGV2();
-            int idUser = int.Parse(textBoxID.Text); 
+            int idUser = int.Parse(textBoxID.Text);
             string login = (textBoxLogin.Text);
             if (!checkBoxCumuler.Checked)
             {

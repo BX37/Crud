@@ -37,9 +37,9 @@
             buttonRed = new Button();
             panel3 = new Panel();
             checkBoxCumuler = new CheckBox();
+            buttonReset = new Button();
             textBoxLogin = new TextBox();
             labelLogin = new Label();
-            buttonReset = new Button();
             buttonValider = new Button();
             textBoxID = new TextBox();
             label3ID = new Label();
@@ -107,7 +107,7 @@
             buttonQuitter.Name = "buttonQuitter";
             buttonQuitter.Size = new Size(95, 35);
             buttonQuitter.TabIndex = 0;
-            buttonQuitter.Text = "Quitter";
+            buttonQuitter.Text = "Retour";
             buttonQuitter.UseVisualStyleBackColor = false;
             buttonQuitter.Click += buttonQuitter_Click;
             // 
@@ -159,6 +159,19 @@
             checkBoxCumuler.UseVisualStyleBackColor = true;
             checkBoxCumuler.CheckedChanged += checkBoxCumuler_CheckedChanged;
             // 
+            // buttonReset
+            // 
+            buttonReset.BackColor = Color.Thistle;
+            buttonReset.FlatStyle = FlatStyle.Popup;
+            buttonReset.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonReset.Location = new Point(3, 364);
+            buttonReset.Name = "buttonReset";
+            buttonReset.Size = new Size(95, 35);
+            buttonReset.TabIndex = 6;
+            buttonReset.Text = "Reset";
+            buttonReset.UseVisualStyleBackColor = false;
+            buttonReset.Click += buttonReset_Click;
+            // 
             // textBoxLogin
             // 
             textBoxLogin.Location = new Point(3, 205);
@@ -175,19 +188,6 @@
             labelLogin.Size = new Size(78, 25);
             labelLogin.TabIndex = 7;
             labelLogin.Text = "Login : ";
-            // 
-            // buttonReset
-            // 
-            buttonReset.BackColor = Color.Thistle;
-            buttonReset.FlatStyle = FlatStyle.Popup;
-            buttonReset.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonReset.Location = new Point(3, 364);
-            buttonReset.Name = "buttonReset";
-            buttonReset.Size = new Size(95, 35);
-            buttonReset.TabIndex = 6;
-            buttonReset.Text = "Reset";
-            buttonReset.UseVisualStyleBackColor = false;
-            buttonReset.Click += buttonReset_Click;
             // 
             // buttonValider
             // 
@@ -252,7 +252,6 @@
             Controls.Add(panel1);
             ForeColor = Color.FromArgb(10, 24, 40);
             Name = "FormLog";
-            Text = "FormLog";
             ((System.ComponentModel.ISupportInitialize)DGVLog).EndInit();
             panel1.ResumeLayout(false);
             panel2.ResumeLayout(false);

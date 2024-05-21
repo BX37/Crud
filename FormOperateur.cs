@@ -22,7 +22,7 @@ namespace Crud
         Utilisateur userCo = new Utilisateur();
         Log LogEnCours = new Log();
         List<Livre> ListInventorier = new List<Livre>();
-        Livre selectedLivre = new Livre(); 
+        Livre selectedLivre = new Livre();
 
         public FormOperateur(Utilisateur utilisateurCo, Log leLog)
         {
@@ -33,6 +33,7 @@ namespace Crud
             laConnexion.Password = Crypto.Decrypt("Wmij8pPWECP0WBekexqbrA==");
             userCo = utilisateurCo;
             LogEnCours = leLog;
+            RemplirDGVLivre();
             DGVLivre.Refresh();
         }
         private void MAJ(object sender, FormClosedEventArgs e)
@@ -44,7 +45,7 @@ namespace Crud
         {
             if (laConnexion.IsConnect())
             {
-                string query2 = "select ID_Livre, Titre, Editeur, noticeBNF from livre where ID_Livre not in(select ID_Livre from inventaire) limit 30;";
+                string query2 = "select *  from livre where ID_Livre not in(select ID_Livre from inventaire) limit 30;";
                 var cmd2 = new MySqlCommand(query2, laConnexion.Connection);
                 var reader12 = cmd2.ExecuteReader();
 
@@ -53,44 +54,47 @@ namespace Crud
                     Livre LeLivre = new Livre
                     {
                         ID_Livre = (int)reader12["ID_livre"],
+                        Identifiant_Livre = (string)reader12["Identifiant"],
                         NoticeBNF_Livre = (int)reader12["NoticeBNF"],
+                        TypeNotice_Livre = (string)reader12["TypeNotice"],
+                        TypeDocument_Livre = (string)reader12["TypeDocument"],
+                        Localisation_Livre = (string)reader12["Localisation"],
+                        Exemplaire_Livre = (string)reader12["Exemplaires"],
                         Titre_Livre = (string)reader12["Titre"],
+                        Auteur_Livre = (string)reader12["Auteur"],
                         Editeur_Livre = (string)reader12["Editeur"],
+                        Date_Livre = (string)reader12["Date"],
+                        Description_Livre = (string)reader12["Description"],
+                        Sujet_Livre = (string)reader12["Sujet"],
+                        Langue_Livre = (string)reader12["Langue"],
+                        Format_Livre = (string)reader12["Format"]
                     };
 
                     ListInventorier.Add(LeLivre);
                 }
                 reader12.Close();
             }
-            DGVLivre.Columns["ID_livre"].Visible = false;
             DGVLivre.DataSource = ListInventorier;
-        }
-
-        private void buttonTest_Click(object sender, EventArgs e)
-        {
-            PdfDocument document = new PdfDocument();
-            // Ajout d'une page au document
-            PdfPage page = document.AddPage();
-            // Obtention du dessinateur pour la page
-            XGraphics gfx = XGraphics.FromPdfPage(page);
-            // Création d'une police
-            XFont font = new XFont("Arial", 12.0, XFontStyle.Regular);
-            // Dessin du texte sur la page
-            gfx.DrawString("Ceci est un exemple de texte dans un fichier PDF créé avec C#.", font,
-           XBrushes.Black,
-            new XRect(30, 30, page.Width.Point, page.Height.Point), XStringFormats.TopLeft);
-            // Sauvegarde du document PDF
-            string pdfFilePath = "C:\\testPDF\\testPDF.pdf";
-            document.Save(pdfFilePath);
-            // Fermeture du document
-            document.Close();
-            Console.WriteLine($"Le fichier PDF a été créé avec succès : {pdfFilePath}");
-
+            DGVLivre.Columns["Titre_Livre"].Width = 271;
+            DGVLivre.Columns["Auteur_Livre"].Width = 271;
+            DGVLivre.Columns["Editeur_Livre"].Width = 271;
+            DGVLivre.Columns["ID_Livre"].Visible = false;
+            DGVLivre.Columns["Identifiant_Livre"].Visible = false;
+            DGVLivre.Columns["NoticeBNF_Livre"].Visible = false;
+            DGVLivre.Columns["TypeNotice_Livre"].Visible = false;
+            DGVLivre.Columns["TypeDocument_Livre"].Visible = false;
+            DGVLivre.Columns["Localisation_Livre"].Visible = false;
+            DGVLivre.Columns["Exemplaire_Livre"].Visible = false;
+            DGVLivre.Columns["Date_Livre"].Visible = false;
+            DGVLivre.Columns["Description_Livre"].Visible = false;
+            DGVLivre.Columns["Sujet_Livre"].Visible = false;
+            DGVLivre.Columns["Langue_Livre"].Visible = false;
+            DGVLivre.Columns["Format_Livre"].Visible = false;
         }
 
         private void buttonConsulter_Click(object sender, EventArgs e)
         {
-            FormOuvrage formOuvrage = new FormOuvrage();
+            FormOuvrage formOuvrage = new FormOuvrage(laConnexion);
             DialogResult result = formOuvrage.ShowDialog();
             this.Visible = false;
 
@@ -109,9 +113,10 @@ namespace Crud
         {
             DataGridViewRow row = DGVLivre.SelectedRows[0];
             selectedLivre = (Livre)row.DataBoundItem;
-            int idLivre = selectedLivre.ID_Livre;
+            Livre LivreSelection = new Livre();
+            LivreSelection = selectedLivre;
             this.Visible = false;
-            Form2DetailOuvragecs FormDetail = new Form2DetailOuvragecs(idLivre);
+            Form2DetailOuvragecs FormDetail = new Form2DetailOuvragecs(LivreSelection, laConnexion);
             DialogResult result = FormDetail.ShowDialog();
 
             if (result == DialogResult.OK)

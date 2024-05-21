@@ -37,7 +37,6 @@ namespace Crud
         Log LogPourDeco = new Log();
         public Form1(Utilisateur UserConnecte, Log NouveauLog)
         {
-
             InitializeComponent();
             DVGenerique.Refresh();
             laConnexion.Server = "localhost";
