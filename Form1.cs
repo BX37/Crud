@@ -331,5 +331,13 @@ namespace Crud
             changementCouleur(choixcouleurs);
             this.Visible = true;
         }
+
+        private void BTDeco_Click(object sender, EventArgs e)
+        {
+            FormLogin NouveauFormlogin = new FormLogin();
+            DialogResult result = NouveauFormlogin.ShowDialog();
+            this.Visible = false;
+            this.Close();
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace Crud
         Tools utilitaire = new Tools();
         DBConnection laConnexion = new DBConnection();
         Utilisateur userCo = new Utilisateur();
-        Log LogEnCours = new Log();
+        Log LogPourDeco = new Log();
         List<Livre> ListInventorier = new List<Livre>();
         Livre selectedLivre = new Livre();
 
@@ -32,14 +32,16 @@ namespace Crud
             laConnexion.UserName = "root";
             laConnexion.Password = Crypto.Decrypt("Wmij8pPWECP0WBekexqbrA==");
             userCo = utilisateurCo;
-            LogEnCours = leLog;
+            LogPourDeco = leLog;
             RemplirDGVLivre();
             DGVLivre.Refresh();
+            this.FormClosed += new FormClosedEventHandler(MAJ);
         }
+
         private void MAJ(object sender, FormClosedEventArgs e)
         {
             utilitaire.MAJDateTimeDeco(laConnexion, userCo);
-            utilitaire.logDeconnexionMAJ(laConnexion, userCo, LogEnCours);
+            utilitaire.logDeconnexionMAJ(laConnexion, userCo, LogPourDeco);
         }
         public void RemplirDGVLivre()
         {
@@ -94,7 +96,7 @@ namespace Crud
 
         private void buttonConsulter_Click(object sender, EventArgs e)
         {
-            FormOuvrage formOuvrage = new FormOuvrage(laConnexion);
+            FormOuvrage formOuvrage = new FormOuvrage(laConnexion, userCo, LogPourDeco);
             DialogResult result = formOuvrage.ShowDialog();
             this.Visible = false;
 
@@ -116,7 +118,7 @@ namespace Crud
             Livre LivreSelection = new Livre();
             LivreSelection = selectedLivre;
             this.Visible = false;
-            Form2DetailOuvragecs FormDetail = new Form2DetailOuvragecs(LivreSelection, laConnexion);
+            Form2DetailOuvragecs FormDetail = new Form2DetailOuvragecs(LivreSelection, laConnexion, LogPourDeco, userCo);
             DialogResult result = FormDetail.ShowDialog();
 
             if (result == DialogResult.OK)
@@ -128,6 +130,14 @@ namespace Crud
 
             }
             this.Visible = true;
+        }
+
+        private void BTDeco_Click(object sender, EventArgs e)
+        {
+            FormLogin NouveauFormlogin = new FormLogin();
+            DialogResult result = NouveauFormlogin.ShowDialog();
+            this.Visible = false;
+            this.Close();
         }
     }
 }

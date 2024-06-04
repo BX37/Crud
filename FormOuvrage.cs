@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Microsoft.VisualBasic.ApplicationServices;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,9 +16,14 @@ namespace Crud
     {
         DBConnection laConnexion = new DBConnection();
         List<Livre> ListLivre = new List<Livre>();
+        Tools utilitaire = new Tools(); 
+        Utilisateur userCo = new Utilisateur();
+        Log LogEnCours = new Log();
 
-        public FormOuvrage(DBConnection laCo)
+        public FormOuvrage(DBConnection laCo, Utilisateur User, Log leLog)
         {
+            LogEnCours = leLog;
+            userCo = User;
             laConnexion = laCo;
             InitializeComponent();
             RemplirDGVLivre();
@@ -62,6 +68,11 @@ namespace Crud
         {
             DialogResult = DialogResult.OK;
             this.Close();
+        }
+        private void MAJ(object sender, FormClosedEventArgs e)
+        {
+            utilitaire.MAJDateTimeDeco(laConnexion, userCo);
+            utilitaire.logDeconnexionMAJ(laConnexion, userCo, LogEnCours);
         }
     }
 }

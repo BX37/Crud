@@ -31,6 +31,7 @@
             DGVLivre = new DataGridView();
             panel1 = new Panel();
             panel2 = new Panel();
+            BTDeco = new Button();
             buttonDetail = new Button();
             buttonConsulter = new Button();
             ((System.ComponentModel.ISupportInitialize)DGVLivre).BeginInit();
@@ -68,6 +69,16 @@
             panel2.Size = new Size(1111, 49);
             panel2.TabIndex = 2;
             // 
+            // BTDeco
+            // 
+            BTDeco.Location = new Point(1133, 259);
+            BTDeco.Name = "BTDeco";
+            BTDeco.Size = new Size(121, 29);
+            BTDeco.TabIndex = 3;
+            BTDeco.Text = "Déconnexion";
+            BTDeco.UseVisualStyleBackColor = true;
+            BTDeco.Click += BTDeco_Click;
+            // 
             // buttonDetail
             // 
             buttonDetail.Location = new Point(12, 11);
@@ -92,7 +103,8 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1052, 574);
+            ClientSize = new Size(1063, 574);
+            Controls.Add(BTDeco);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Name = "FormOperateur";
@@ -110,5 +122,6 @@
         private Panel panel2;
         private Button buttonConsulter;
         private Button buttonDetail;
+        private Button BTDeco;
     }
 }
