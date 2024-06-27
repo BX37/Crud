@@ -45,6 +45,8 @@
             label3ID = new Label();
             label2 = new Label();
             label1 = new Label();
+            BTE51 = new Button();
+            BTE52 = new Button();
             ((System.ComponentModel.ISupportInitialize)DGVLog).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -240,12 +242,42 @@
             label1.TabIndex = 5;
             label1.Text = "Historique des connexions";
             // 
+            // BTE51
+            // 
+            BTE51.BackColor = Color.Thistle;
+            BTE51.FlatStyle = FlatStyle.Popup;
+            BTE51.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
+            BTE51.ForeColor = Color.DarkViolet;
+            BTE51.Location = new Point(1016, 224);
+            BTE51.Name = "BTE51";
+            BTE51.Size = new Size(95, 35);
+            BTE51.TabIndex = 3;
+            BTE51.Text = "BTE51";
+            BTE51.UseVisualStyleBackColor = false;
+            BTE51.Click += BTE51_Click;
+            // 
+            // BTE52
+            // 
+            BTE52.BackColor = Color.Thistle;
+            BTE52.FlatStyle = FlatStyle.Popup;
+            BTE52.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
+            BTE52.ForeColor = Color.DarkViolet;
+            BTE52.Location = new Point(1016, 289);
+            BTE52.Name = "BTE52";
+            BTE52.Size = new Size(95, 35);
+            BTE52.TabIndex = 6;
+            BTE52.Text = "BTE52";
+            BTE52.UseVisualStyleBackColor = false;
+            BTE52.Click += BTE52_Click;
+            // 
             // FormLog
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.MistyRose;
-            ClientSize = new Size(1008, 462);
+            ClientSize = new Size(1007, 462);
+            Controls.Add(BTE52);
+            Controls.Add(BTE51);
             Controls.Add(label1);
             Controls.Add(panel3);
             Controls.Add(panel2);
@@ -280,5 +312,7 @@
         private TextBox textBoxLogin;
         private Label labelLogin;
         private CheckBox checkBoxCumuler;
+        private Button BTE51;
+        private Button BTE52;
     }
 }

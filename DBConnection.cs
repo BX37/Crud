@@ -39,7 +39,6 @@ namespace Crud
             return true;
         }
 
-        
         public void Close()
         {
             Connection.Close();

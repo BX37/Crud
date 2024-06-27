@@ -339,5 +339,24 @@ namespace Crud
             this.Visible = false;
             this.Close();
         }
+
+        private void BTGraph_Click(object sender, EventArgs e)
+        {
+            this.Visible = false;
+            Graphique NouveauFormGraph = new Graphique(laConnexion);
+            DialogResult result = NouveauFormGraph.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                refreshDGV();
+            }
+            else if (result == DialogResult.Cancel)
+            {
+            }
+
+            //choixcouleurs = NouveauFormGraph.retourDeCouleur();
+            changementCouleur(choixcouleurs);
+            this.Visible = true;
+        }
     }
 }

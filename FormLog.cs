@@ -20,6 +20,7 @@ namespace Crud
         List<Log> listLog = new List<Log>();
         List<Log> listLog2 = new List<Log>();
         List<Log> listLogApresLinq = new List<Log>();
+        List<Utilisateur> listUser = new List<Utilisateur>();
         private Utilisateur utilisateurAModifier;
         private DBConnection laConnexion;
         ChoixColors choixdelaCouleur = new ChoixColors();
@@ -244,7 +245,6 @@ namespace Crud
         }
         public void remplirDGV2()
         {
-
             {
                 int id = int.Parse(textBoxID.Text);
                 DGVLog.DataSource = null;
@@ -308,6 +308,76 @@ namespace Crud
             }
             else resetDGV();
 
+        }
+
+        private void BTE51_Click(object sender, EventArgs e)
+        {
+            {
+                DGVLog.DataSource = null;
+                DGVLog.ClearSelection();
+                listLog2.Clear();
+                if (laConnexion.IsConnect())
+                {
+
+                    string query = @"
+            SELECT ID_User, Nom, Prenom, Login
+            FROM user
+            WHERE ID_User NOT IN (
+                SELECT ID_User
+                FROM log
+                WHERE logDateTimeConnexion >= DATE_SUB(NOW(), INTERVAL 5 DAY)
+                GROUP BY ID_User
+                HAVING COUNT(*) >= 2
+            )";
+                    var cmd = new MySqlCommand(query, laConnexion.Connection);
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Utilisateur leUser = new Utilisateur
+                        {
+                            UtilisateurID = (int)reader["ID_User"],
+                            UtilisateurNom = (string)reader["Nom"],
+                            UtilisateurPrenom = (string)reader["Prenom"],
+                            UtilisateurLogin = (string)reader["Login"]
+                        };
+                        listUser.Add(leUser);
+                    }
+                    reader.Close();
+                }
+                DGVLog.DataSource = listUser;
+            }
+        }
+
+        private void BTE52_Click(object sender, EventArgs e)
+        {
+            DGVLog.DataSource = null;
+            DGVLog.ClearSelection();
+            listUser.Clear();
+            if (laConnexion.IsConnect())
+            {
+                string query = @"
+            SELECT u.ID_User, u.Nom, u.Prenom, u.Login
+            FROM user u
+            INNER JOIN log l ON u.ID_User = l.ID_User
+            WHERE DAYOFWEEK(l.logDateTimeConnexion) = 1";
+                var cmd = new MySqlCommand(query, laConnexion.Connection);
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Utilisateur leUser = new Utilisateur
+                    {
+                        UtilisateurID = (int)reader["ID_User"],
+                        UtilisateurNom = (string)reader["Nom"],
+                        UtilisateurPrenom = (string)reader["Prenom"],
+                        UtilisateurLogin = (string)reader["Login"]
+                    };
+                    listUser.Add(leUser);
+                }
+                reader.Close();
+            }
+            DGVLog.DataSource = listUser;
         }
     }
 

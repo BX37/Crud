@@ -37,7 +37,7 @@
             // 
             // buttonRetour
             // 
-            buttonRetour.Location = new Point(437, 416);
+            buttonRetour.Location = new Point(1078, 514);
             buttonRetour.Name = "buttonRetour";
             buttonRetour.Size = new Size(256, 29);
             buttonRetour.TabIndex = 0;
@@ -51,7 +51,7 @@
             panel1.Controls.Add(DGVLivre);
             panel1.Location = new Point(21, 22);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1166, 344);
+            panel1.Size = new Size(1313, 486);
             panel1.TabIndex = 1;
             // 
             // DGVLivre
@@ -61,7 +61,7 @@
             DGVLivre.Name = "DGVLivre";
             DGVLivre.RowHeadersWidth = 51;
             DGVLivre.RowTemplate.Height = 29;
-            DGVLivre.Size = new Size(1160, 322);
+            DGVLivre.Size = new Size(1307, 480);
             DGVLivre.TabIndex = 0;
             // 
             // FormOuvrage

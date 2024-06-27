@@ -35,12 +35,13 @@
             panel1 = new Panel();
             labelBonjour = new Label();
             panel2 = new Panel();
-            BTDeco = new Button();
             BTColorBlue = new Button();
             buttonLog = new Button();
             BTColorGreen = new Button();
             BTColorRed = new Button();
+            BTDeco = new Button();
             panel4 = new Panel();
+            BTGraph = new Button();
             ((System.ComponentModel.ISupportInitialize)DVGenerique).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -136,21 +137,6 @@
             panel2.Size = new Size(1319, 46);
             panel2.TabIndex = 22;
             // 
-            // BTDeco
-            // 
-            BTDeco.BackColor = Color.White;
-            BTDeco.FlatAppearance.BorderColor = Color.FromArgb(23, 133, 130);
-            BTDeco.FlatStyle = FlatStyle.Popup;
-            BTDeco.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
-            BTDeco.ForeColor = Color.FromArgb(191, 161, 129);
-            BTDeco.Location = new Point(1141, 215);
-            BTDeco.Name = "BTDeco";
-            BTDeco.Size = new Size(189, 39);
-            BTDeco.TabIndex = 17;
-            BTDeco.Text = "Déconnexion";
-            BTDeco.UseVisualStyleBackColor = false;
-            BTDeco.Click += BTDeco_Click;
-            // 
             // BTColorBlue
             // 
             BTColorBlue.BackColor = Color.FromArgb(10, 24, 40);
@@ -198,6 +184,21 @@
             BTColorRed.UseVisualStyleBackColor = false;
             BTColorRed.Click += BTColorRed_Click;
             // 
+            // BTDeco
+            // 
+            BTDeco.BackColor = Color.White;
+            BTDeco.FlatAppearance.BorderColor = Color.FromArgb(23, 133, 130);
+            BTDeco.FlatStyle = FlatStyle.Popup;
+            BTDeco.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
+            BTDeco.ForeColor = Color.FromArgb(191, 161, 129);
+            BTDeco.Location = new Point(1141, 215);
+            BTDeco.Name = "BTDeco";
+            BTDeco.Size = new Size(189, 39);
+            BTDeco.TabIndex = 17;
+            BTDeco.Text = "Déconnexion";
+            BTDeco.UseVisualStyleBackColor = false;
+            BTDeco.Click += BTDeco_Click;
+            // 
             // panel4
             // 
             panel4.BackColor = Color.DarkCyan;
@@ -209,12 +210,28 @@
             panel4.Size = new Size(1362, 46);
             panel4.TabIndex = 23;
             // 
+            // BTGraph
+            // 
+            BTGraph.BackColor = Color.White;
+            BTGraph.FlatAppearance.BorderColor = Color.FromArgb(23, 133, 130);
+            BTGraph.FlatStyle = FlatStyle.Popup;
+            BTGraph.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
+            BTGraph.ForeColor = Color.FromArgb(191, 161, 129);
+            BTGraph.Location = new Point(1156, 292);
+            BTGraph.Name = "BTGraph";
+            BTGraph.Size = new Size(189, 39);
+            BTGraph.TabIndex = 24;
+            BTGraph.Text = "Graph";
+            BTGraph.UseVisualStyleBackColor = false;
+            BTGraph.Click += BTGraph_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.PowderBlue;
-            ClientSize = new Size(1123, 529);
+            ClientSize = new Size(1310, 529);
+            Controls.Add(BTGraph);
             Controls.Add(BTDeco);
             Controls.Add(panel4);
             Controls.Add(panel2);
@@ -249,5 +266,6 @@
         private Button buttonLog;
         private Panel panel4;
         private Button BTDeco;
+        private Button BTGraph;
     }
 }
